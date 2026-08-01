@@ -115,6 +115,23 @@ function RateLimitCard({ initialDelay = 60 }: { initialDelay?: number }) {
   );
 }
 
+function cleanMarkdownText(text: string): string {
+  if (!text) return '';
+  return text
+    // Remove stray symbol lines like "***###", "###***", "***"
+    .replace(/^[\*\#\-\_]{3,}\s*$/gm, '')
+    // Fix bold titles lacking a space after colon, e.g. "**Title:**Text" -> "**Title:** Text"
+    .replace(/\*\*([^\*\n]+):\*\*([^\s\n])/g, '**$1:** $2')
+    // Fix bold titles lacking a space after closing stars without colon, e.g. "**Title**Text" -> "**Title** Text"
+    .replace(/\*\*([^\*\n]+)\*\*([A-Za-z0-9])/g, '**$1** $2')
+    // Fix malformed bold markers with spaces inside: "** text" -> "**text"
+    .replace(/\*\*\s+/g, '**')
+    .replace(/\s+\*\*/g, '**')
+    // Ensure line break before new bold section titles if attached directly to preceding paragraph
+    .replace(/([^\n])\n?\*\*([A-Z][^\*\n]+:\*\*)/g, '$1\n\n**$2')
+    .trim();
+}
+
 function AssistantMessageContent({ content }: { content: string }) {
   if (!content) return null;
 
@@ -122,9 +139,8 @@ function AssistantMessageContent({ content }: { content: string }) {
   const englishPart = parts[0];
   const rawRomanUrdu = parts.length > 1 ? parts.slice(1).join('Roman Urdu Mein:') : null;
 
-  // Clean up any malformed bold markdown syntax like "** text" with spaces after stars
-  const formattedEnglish = englishPart ? englishPart.replace(/\*\*\s+/g, '**') : '';
-  const formattedRomanUrdu = rawRomanUrdu ? rawRomanUrdu.trim().replace(/\*\*\s+/g, '**') : null;
+  const formattedEnglish = cleanMarkdownText(englishPart);
+  const formattedRomanUrdu = rawRomanUrdu ? cleanMarkdownText(rawRomanUrdu) : null;
 
   return (
     <div className="text-slate-800 leading-relaxed text-sm space-y-2">

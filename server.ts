@@ -556,9 +556,13 @@ Rewritten standalone question:`;
       `==============================\n` +
       `QUESTION: ${standaloneQuestion}\n` +
       `==============================\n\n` +
-      `Provide:\n` +
-      `1. A clear English answer citing Article numbers and page numbers.\n` +
-      `2. Roman Urdu Mein: A simple Roman Urdu explanation.\n\n` +
+      `INSTRUCTIONS & FORMATTING:\n` +
+      `- Provide a clear, well-structured English answer citing exact Article numbers and Page numbers (e.g. Article 58(1) (Page 30)).\n` +
+      `- Ensure proper spaces between words and after punctuation.\n` +
+      `- Use proper Markdown bullet points (* or -) or numbered lists with clear line breaks.\n` +
+      `- Always put a space after bold headers and colons (e.g. "**By the President on advice:** According to...").\n` +
+      `- Do NOT output stray characters or delimiter artifacts like ***### or markdown code blocks.\n` +
+      `- End with a section starting with "Roman Urdu Mein:" containing a simple, accurate Roman Urdu explanation.\n\n` +
       `If the answer is not in the articles above, say exactly:\n` +
       `"This information is not found in the provided articles of the Constitution of Pakistan."`;
 
