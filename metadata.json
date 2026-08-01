@@ -1,0 +1,6 @@
+{
+  "name": "Constitution of Pakistan AI Assistant",
+  "description": "Conversational RAG chatbot and legal reference for the Constitution of Pakistan (updated Nov 2025) with live streaming, Article citations, and Roman Urdu explanations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
